@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             Button b = (Button) v;
             operation = (String) b.getText();
+            num2 = "";
             if(operation.equals("C")){
                 reset();
             }
@@ -61,11 +62,23 @@ public class MainActivity extends AppCompatActivity {
     }
     private int operation(){
         int d = Integer.parseInt(this.num2);
-        if(operation.equals("+")){
-            d += res;
-        }else if(operation.equals("C")){
-            d = 0;
-            textViewOp.setText("");
+        switch (operation) {
+            case "+":
+                d += res;
+                break;
+            case "*":
+                d *= res;
+                break;
+            case "-":
+                d = res - d;
+                break;
+            case "/":
+                d = res / d;
+                break;
+            case "C":
+                d = 0;
+                textViewOp.setText("");
+                break;
         }
         //TODO acabar de implementar todo
         return d;
