@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 reset();
             }
             else textViewOp.append(operation);
-            Log.v("I", "Click!");
         }
     };
     //inflar toolbar
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.options_menu_example,menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    //Configurar acciones Menú toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
