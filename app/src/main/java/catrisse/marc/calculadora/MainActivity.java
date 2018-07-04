@@ -13,17 +13,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.fathzer.soft.javaluator.DoubleEvaluator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-//TODO la calculadora no funciona bien.... revisar
+
 public class MainActivity extends AppCompatActivity {
+    DoubleEvaluator evaluator = new DoubleEvaluator();
     List<Button> numbers = new ArrayList<>();
     List<Button> operations = new ArrayList<>();
-    int res = 0;
-    String operation = "";
-    String num2 = "";
     TextView textViewOp;
     TextView textViewResult;
     ImageView callButton;
@@ -32,10 +32,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             Button b = (Button) v;
             String num = (String) b.getText();
-            textViewOp.append(num);
-            num2 += num;
-            res = operation();
-            textViewResult.setText(String.valueOf(res));
+            textViewOp.append(num); //añadimos el numero tal cual
         }
     };
 
@@ -43,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Button b = (Button) v;
-            operation = (String) b.getText();
-            num2 = "";
-            //TODO implementar = correctamente
+            String operation = (String) b.getText();
             if(operation.equals("C")){
                 reset();
-            }
-            else textViewOp.append(operation);
+            }else if(operation.equals("=")){
+                resuelve();
+            }else textViewOp.append(operation); //Si no es una de las opciones especiales, se inserta el caracter tal cual
         }
     };
+
     //inflar toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,31 +89,7 @@ public class MainActivity extends AppCompatActivity {
         iniOp();
         iniMisc();
     }
-    private int operation(){
-        int d = Integer.parseInt(this.num2);
-        switch (operation) {
-            case "+":
-                d += res;
-                break;
-            case "*":
-                d *= res;
-                break;
-            case "-":
-                d = res - d;
-                break;
-            case "/":
-                d = res / d;
-                break;
-            case "C":
-                d = 0;
-                textViewOp.setText("");
-                break;
-        }
-        //TODO acabar de implementar todo
-        return d;
-
-    }
-    private void iniMisc(){
+    private void iniMisc(){ //Set listener call button
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +99,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void iniNums(){
+    private void resuelve() { //funcion que resuelve según textViewOp
+        Double d = 0.0;
+        try{
+            d = this.evaluator.evaluate(textViewOp.getText().toString());
+        }catch(Exception e){
+            this.textViewOp.setError("No valid operation");
+        }
+        this.textViewResult.setText(String.format(Locale.ENGLISH,"%.2f",d));
+    }
+
+    private void iniNums(){ //inicializamos los numeros
         numbers.add((Button) findViewById(R.id.button1));
         numbers.add((Button) findViewById(R.id.button2));
         numbers.add((Button) findViewById(R.id.button3));
@@ -140,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         for(Button aux : numbers) aux.setOnClickListener(listenerButtonNumber);
     }
 
-    private void iniOp(){
+    private void iniOp(){ //inicializamos los buttons de las operaciones
         operations.add((Button) findViewById(R.id.button4));
         operations.add((Button) findViewById(R.id.button8));
         operations.add((Button) findViewById(R.id.button12));
@@ -150,13 +133,11 @@ public class MainActivity extends AppCompatActivity {
         for(Button aux : operations) aux.setOnClickListener(listenerButtonOperation);
     }
 
-    private void reset(){
+    private void reset(){ //AC pressed
         textViewOp.setText("");
         textViewResult.setText("");
-        operation = "";
-        num2 = "";
-        res = 0;
     }
+
     //codigo ejemplo para esconder la ActionBar
     private void esconderActionBar(){
         ActionBar actionBar = getSupportActionBar();
