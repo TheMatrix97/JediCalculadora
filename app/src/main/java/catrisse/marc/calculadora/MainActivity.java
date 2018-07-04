@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO la calculadora no funciona bien.... revisar
 public class MainActivity extends AppCompatActivity {
     List<Button> numbers = new ArrayList<>();
     List<Button> operations = new ArrayList<>();
