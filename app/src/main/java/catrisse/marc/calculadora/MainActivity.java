@@ -2,9 +2,13 @@ package catrisse.marc.calculadora;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             Button b = (Button) v;
             operation = (String) b.getText();
             num2 = "";
+            //TODO implementar = correctamente
             if(operation.equals("C")){
                 reset();
             }
@@ -47,7 +52,28 @@ public class MainActivity extends AppCompatActivity {
             Log.v("I", "Click!");
         }
     };
+    //inflar toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu_example,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item1:
+                Log.v("I", "Item 1 selected!");
+                break;
+            case R.id.item2:
+                Log.v("I", "Item 2 selected!");
+                break;
+            case R.id.item3:
+                Log.v("I", "Item 3 selected!");
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         textViewResult = findViewById(R.id.textViewResult);
         textViewOp = findViewById(R.id.textView);
         callButton = findViewById(R.id.callButton);
+        Toolbar tb = findViewById(R.id.toolbar);
+        tb.inflateMenu(R.menu.options_menu_example);
+        setSupportActionBar(tb);
         iniNums();
         iniOp();
         iniMisc();
@@ -124,5 +153,13 @@ public class MainActivity extends AppCompatActivity {
         operation = "";
         num2 = "";
         res = 0;
+    }
+    //codigo ejemplo para esconder la ActionBar
+    private void esconderActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
     }
 }
