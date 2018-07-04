@@ -13,15 +13,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.fathzer.soft.javaluator.DoubleEvaluator;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import catrisse.marc.utils.DoubleEvaluatorExtended;
+
 
 public class MainActivity extends AppCompatActivity {
-    DoubleEvaluator evaluator = new DoubleEvaluator();
+    DoubleEvaluatorExtended evaluator = new DoubleEvaluatorExtended();
     List<Button> numbers = new ArrayList<>();
     List<Button> operations = new ArrayList<>();
     TextView textViewOp;
@@ -41,11 +43,23 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             Button b = (Button) v;
             String operation = (String) b.getText();
-            if(operation.equals("C")){
-                reset();
-            }else if(operation.equals("=")){
-                resuelve();
-            }else textViewOp.append(operation); //Si no es una de las opciones especiales, se inserta el caracter tal cual
+            switch (operation) {
+                case "AC":
+                    reset();
+                    break;
+                case "=":
+                    resuelve();
+                    break;
+                case "DEL":
+                    String aux = textViewOp.getText().toString();
+                    int last = aux.length() - 1;
+                    if (last >= 0) textViewOp.setText(aux.substring(0, last));
+                    break;
+                default:
+                    textViewOp.append(operation); //Si no es una de las opciones especiales, se inserta el caracter tal cual
+
+                    break;
+            }
         }
     };
 
@@ -119,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
             d = this.evaluator.evaluate(textViewOp.getText().toString());
         }catch(Exception e){
             this.textViewOp.setError("No valid operation");
+            Toast.makeText(getApplicationContext(),"La sintaxi no es correcta", Toast.LENGTH_SHORT).show();
         }
         this.textViewResult.setText(String.format(Locale.ENGLISH,"%.2f",d));
     }
@@ -134,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         numbers.add((Button) findViewById(R.id.button10));
         numbers.add((Button) findViewById(R.id.button11));
         numbers.add((Button) findViewById(R.id.button13));
+        numbers.add((Button) findViewById(R.id.button14));
         for(Button aux : numbers) aux.setOnClickListener(listenerButtonNumber);
     }
 
@@ -141,9 +157,21 @@ public class MainActivity extends AppCompatActivity {
         operations.add((Button) findViewById(R.id.button4));
         operations.add((Button) findViewById(R.id.button8));
         operations.add((Button) findViewById(R.id.button12));
-        operations.add((Button) findViewById(R.id.button14));
         operations.add((Button) findViewById(R.id.button15));
         operations.add((Button) findViewById(R.id.button16));
+        //fila 1
+        operations.add((Button) findViewById(R.id.button20));
+        operations.add((Button) findViewById(R.id.button21));
+        operations.add((Button) findViewById(R.id.button22));
+        operations.add((Button) findViewById(R.id.button23));
+
+        //fila 2
+        operations.add((Button) findViewById(R.id.button19));
+        operations.add((Button) findViewById(R.id.button18));
+        operations.add((Button) findViewById(R.id.button17));
+        operations.add((Button) findViewById(R.id.button));
+
+
         for(Button aux : operations) aux.setOnClickListener(listenerButtonOperation);
     }
 

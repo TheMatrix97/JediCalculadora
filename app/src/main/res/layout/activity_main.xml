@@ -14,8 +14,9 @@
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </android.support.v7.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="parent"
+        app:theme="@style/Theme.AppCompat"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -25,8 +26,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@+id/callButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -55,32 +55,102 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/button23"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/sqrt" />
+
+            <Button
+                android:id="@+id/button22"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/tan" />
+
+            <Button
+                android:id="@+id/button21"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/sin" />
+
+            <Button
+                android:id="@+id/button20"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/cos" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button19"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/parentesisopen" />
+
+            <Button
+                android:id="@+id/button18"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/parentesisclose" />
+
+            <Button
+                android:id="@+id/button17"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/ac" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/del" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="7" />
+                android:text="@string/_7" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="8" />
+                android:text="@string/_8" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="9" />
+                android:text="@string/_9" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="/" />
+                android:text="@string/barra" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,28 +164,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="4" />
+                android:text="@string/_4" />
 
             <Button
                 android:id="@+id/button6"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="5" />
+                android:text="@string/_5" />
 
             <Button
                 android:id="@+id/button7"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="6" />
+                android:text="@string/_6" />
 
             <Button
                 android:id="@+id/button8"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="*" />
+                android:text="@string/asterisco" />
         </LinearLayout>
 
         <LinearLayout
@@ -129,28 +199,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="1" />
+                android:text="@string/_1" />
 
             <Button
                 android:id="@+id/button10"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="2" />
+                android:text="@string/_2" />
 
             <Button
                 android:id="@+id/button11"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="3" />
+                android:text="@string/_3" />
 
             <Button
                 android:id="@+id/button12"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="-" />
+                android:text="@string/guion" />
         </LinearLayout>
 
         <LinearLayout
@@ -171,21 +241,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="C" />
+                android:text="@string/punto" />
 
             <Button
                 android:id="@+id/button15"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="=" />
+                android:text="@string/igual" />
 
             <Button
                 android:id="@+id/button16"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="+" />
+                android:text="@string/mas" />
         </LinearLayout>
 
     </LinearLayout>
@@ -196,8 +266,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="8dp"
-        android:text="Resultado:"
-        android:textSize="14sp"
+        android:text="@string/resultado"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -205,13 +275,10 @@
         android:id="@+id/callButton"
         android:layout_width="47dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:srcCompat="@android:drawable/sym_action_call" />
 
 </android.support.constraint.ConstraintLayout>
