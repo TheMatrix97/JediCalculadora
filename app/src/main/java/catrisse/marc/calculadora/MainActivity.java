@@ -55,6 +55,23 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.options_menu_example,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("operationField", textViewOp.getText().toString());
+        outState.putString("resultField", textViewResult.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String textOp = savedInstanceState.getString("operationField");
+        String textRes = savedInstanceState.getString("resultField");
+        textViewOp.setText(textOp);
+        textViewResult.setText(textRes);
+    }
+
     //Configurar acciones Menú toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
