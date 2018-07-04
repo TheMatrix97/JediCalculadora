@@ -77,10 +77,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item1:
-                Intent i = new Intent(getApplicationContext(),Main2Activity.class);
-                i.putExtra("text", "Hola que tal?");
                 Log.v("I", "Item 1 selected!");
-                startActivity(i);
                 break;
             case R.id.item2:
                 Log.v("I", "Item 2 selected!");
