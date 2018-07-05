@@ -1,5 +1,7 @@
 package catrisse.marc.calculadora;
 
+import android.content.SharedPreferences;
+
 public class User {
     private String nom;
     private String pass;
@@ -9,8 +11,8 @@ public class User {
         this.pass = pass;
     }
 
-    public boolean login(){
-        if(nom.equals("Marc") && pass.equals("catrisse")){
+    public boolean login(String pass){
+        if(!pass.isEmpty() && pass.equals(this.pass)){
             return true;
         }else return false;
     }

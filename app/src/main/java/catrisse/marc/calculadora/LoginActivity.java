@@ -1,6 +1,8 @@
 package catrisse.marc.calculadora;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +15,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editUser;
     EditText editPass;
     Button login;
+    Button register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,17 +28,29 @@ public class LoginActivity extends AppCompatActivity {
         editPass = findViewById(R.id.editTextPass);
         editUser = findViewById(R.id.editTextUser);
         login = findViewById(R.id.buttonLogin);
+        register = findViewById(R.id.buttonRegisterLog);
         setSupportActionBar(tb);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User aux = new User(editUser.getText().toString(), editPass.getText().toString());
-                if(aux.login()){
+                String name = editUser.getText().toString();
+                String password = editPass.getText().toString();
+                User aux = new User(name, password);
+                SharedPreferences settings = getSharedPreferences(RegisterActivity.PREFS_NAME, Context.MODE_PRIVATE);
+                if(aux.login(settings.getString(name,""))){
                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(i);
                 }else{
                     Toast.makeText(getApplicationContext(),"Login incorrecto", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),RegisterActivity.class);
+                startActivity(i);
             }
         });
     }
