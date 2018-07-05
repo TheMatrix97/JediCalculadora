@@ -30,4 +30,6 @@
     <string name="igual">=</string>
     <string name="mas">+</string>
     <string name="resultado">Resultado:</string>
+    <string name="snackbar_text">Usuario registrado con éxito!</string>
+    <string name="snackbar_action">Login</string>
 </resources>

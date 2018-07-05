@@ -1,8 +1,11 @@
 package catrisse.marc.calculadora;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,12 +46,26 @@ public class RegisterActivity extends AppCompatActivity {
                     String userName = editName.getText().toString();
                     editor.putString(userName, editPass.getText().toString());
                     editor.apply();
-                    Toast.makeText(getApplicationContext(),String.format("El usuario %s se ha registrado con exito",userName),Toast.LENGTH_SHORT).show();
+                    show_snackbar();
                 }else{
                     Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+    }
+
+    private void show_snackbar() {
+        View parentLayout = findViewById(R.id.parentLayoutRegister);
+        Snackbar
+                .make(parentLayout, R.string.snackbar_text, Snackbar.LENGTH_LONG)
+                .setAction(R.string.snackbar_action, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i);
+                    }
+                })
+                .show(); // Importante!!! No olvidar mostrar la Snackbar.
     }
 }
