@@ -10,7 +10,7 @@ public class User {
         this.nom = nom;
         this.pass = pass;
     }
-
+    //se podria pasar el contexto de la aplicacion para llamar a getSharedPreferences desde aqui
     public boolean login(String pass){
         if(!pass.isEmpty() && pass.equals(this.pass)){
             return true;

@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText editName;
@@ -39,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String password = editPass.getText().toString() ;
                 String confpass = editConfirmPass.getText().toString();
-                if(!editName.getText().toString().isEmpty() && password.equals(confpass)){
+                if(!editName.getText().toString().isEmpty() && !password.isEmpty() && password.equals(confpass)){
                     settings = getSharedPreferences(PREFS_NAME, 0);
                     SharedPreferences.Editor editor = settings.edit();
                     String userName = editName.getText().toString();
