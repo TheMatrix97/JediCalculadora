@@ -7,21 +7,21 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.TextInputLayout;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText editUser;
-    EditText editPass;
+    TextInputEditText editUser;
+    TextInputEditText editPass;
     Button login;
     Button register;
+    final int idNotification = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +44,12 @@ public class LoginActivity extends AppCompatActivity {
                 User aux = new User(name, password);
                 SharedPreferences settings = getSharedPreferences(RegisterActivity.PREFS_NAME, Context.MODE_PRIVATE);
                 if(aux.login(settings.getString(name,""))){
+                    cancelarNotificacion();
                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(i);
                 }else{
                     Toast.makeText(getApplicationContext(),"Login incorrecto", Toast.LENGTH_LONG).show();
-                    mostrar_notificacion(aux.getNom());
+                    mostrar_notificacion_estado(aux.getNom());
                 }
             }
         });
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void mostrar_notificacion(String nom) {
+    private void mostrar_notificacion_estado(String nom) {
         //mas info https://developer.android.com/training/notify-user/build-notification
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(getApplicationContext(),"default") //se que esta deprecated, a partir de la 26 te obligan a usar un NotificationChannelID
@@ -86,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
 
         NotificationManager
                 mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        int myId = 2;
         Notification notification = mBuilder.build();
         notification.flags |= Notification.FLAG_NO_CLEAR; //añadimos flag para que no se pueda 'limpiar'
 
@@ -95,7 +95,13 @@ public class LoginActivity extends AppCompatActivity {
                     ,NotificationManager.IMPORTANCE_HIGH);
             mNotificationManager.createNotificationChannel(nc);
         }
-        mNotificationManager.notify(myId,notification);
+        mNotificationManager.notify(idNotification,notification);
+    }
+
+    private void cancelarNotificacion(){
+        NotificationManager
+                mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(idNotification);
     }
 
 }
