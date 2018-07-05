@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void mostrar_notificacion(String nom) {
+        //mas info https://developer.android.com/training/notify-user/build-notification
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(getApplicationContext(),"default") //se que esta deprecated, a partir de la 26 te obligan a usar un NotificationChannelID
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -90,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel  nc = new NotificationChannel("default",getString(R.string.channelName)
-                    ,NotificationManager.IMPORTANCE_LOW);
+                    ,NotificationManager.IMPORTANCE_HIGH);
             mNotificationManager.createNotificationChannel(nc);
         }
         mNotificationManager.notify(myId,notification);
