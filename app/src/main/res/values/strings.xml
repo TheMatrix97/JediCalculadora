@@ -32,4 +32,6 @@
     <string name="resultado">Resultado:</string>
     <string name="snackbar_text">Usuario registrado con éxito!</string>
     <string name="snackbar_action">Login</string>
+    <string name="channelName">default</string>
+    <string name="channelDescription">Canal para notificar errores de login</string>
 </resources>
