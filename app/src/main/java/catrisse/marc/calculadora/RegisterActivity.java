@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 
 public class RegisterActivity extends AppCompatActivity {
     EditText editName;
@@ -41,18 +44,43 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = editPass.getText().toString() ;
                 String confpass = editConfirmPass.getText().toString();
                 if(!editName.getText().toString().isEmpty() && !password.isEmpty() && password.equals(confpass)){
-                    settings = getSharedPreferences(PREFS_NAME, 0);
-                    SharedPreferences.Editor editor = settings.edit();
                     String userName = editName.getText().toString();
-                    editor.putString(userName, editPass.getText().toString());
-                    editor.apply();
-                    show_snackbar();
+                    if(registrarUserNuevo(userName, editPass.getText().toString())){
+                        show_snackbar();
+                    }
                 }else{
-                    Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"error en el formulario",Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+    }
+
+    private boolean registrarUserNuevo(String userName, String s) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<User> res = realm.where(User.class).equalTo("nom",userName).findAll();
+        if(res.size() == 0){
+            final User user = new User(userName, s);
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.copyToRealm(user);
+                }
+            });
+            //check que se ha guardado correctamente (se puede hacer mejor??)
+            res = realm.where(User.class).equalTo("nom",userName)
+                    .and()
+                    .equalTo("pass",s).findAll();
+            if(res.size() == 0){
+                Toast.makeText(getApplicationContext(),"error al registrar en la BD",Toast.LENGTH_SHORT).show();
+            }
+            return res.size() == 1;
+
+
+        }else {
+            Toast.makeText(getApplicationContext(),"Ya existe este usuario",Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
     private void show_snackbar() {
@@ -62,8 +90,11 @@ public class RegisterActivity extends AppCompatActivity {
                 .setAction(R.string.snackbar_action, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        /*
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(i);
+                        startActivity(i);*/
+                        //finish activity
+                        finish();
                     }
                 })
                 .show(); // Importante!!! No olvidar mostrar la Snackbar.

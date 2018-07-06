@@ -12,9 +12,13 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText editUser;
@@ -22,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     Button register;
     final int idNotification = 2;
+    Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void ini() {
+        iniRealm();
         Toolbar tb = findViewById(R.id.toolbar2);
         editPass = findViewById(R.id.editTextPass);
         editUser = findViewById(R.id.editTextUser);
@@ -42,8 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 String name = editUser.getText().toString();
                 String password = editPass.getText().toString();
                 User aux = new User(name, password);
-                SharedPreferences settings = getSharedPreferences(RegisterActivity.PREFS_NAME, Context.MODE_PRIVATE);
-                if(aux.login(settings.getString(name,""))){
+                if(estaRegistrado(aux)){
                     cancelarNotificacion();
                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(i);
@@ -61,6 +66,20 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    private boolean estaRegistrado(User aux) {
+        String nom = aux.getNom();
+        String passw = aux.getPass();
+        RealmResults<User> result = realm.where(User.class).equalTo("nom",nom) //buscamos user con mismo nombre y pass
+                .and()
+                .equalTo("pass",passw).findAll();
+        return result.size() == 1; //si devuelve 1 existe y esta registrado
+    }
+
+    private void iniRealm() {
+        Realm.init(getApplicationContext());
+        this.realm = Realm.getDefaultInstance();
     }
 
     private void mostrar_notificacion_estado(String nom) {
@@ -102,6 +121,27 @@ public class LoginActivity extends AppCompatActivity {
         NotificationManager
                 mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.cancel(idNotification);
+    }
+
+
+    /* TEST THREAD */
+    private void thread_start(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int i = 0;
+                while(i < 10000){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Log.v("thread", "Awake");
+                    i += 1000;
+                }
+            }
+        }).start();
+
     }
 
 }

@@ -1,20 +1,20 @@
 package catrisse.marc.calculadora;
 
-import android.content.SharedPreferences;
 
-public class User {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class User extends RealmObject{
+    @PrimaryKey
     private String nom;
     private String pass;
+
+    public User() {
+    }
 
     public User(String nom, String pass) {
         this.nom = nom;
         this.pass = pass;
-    }
-    //se podria pasar el contexto de la aplicacion para llamar a getSharedPreferences desde aqui
-    public boolean login(String pass){
-        if(!pass.isEmpty() && pass.equals(this.pass)){
-            return true;
-        }else return false;
     }
 
     public String getNom() {
