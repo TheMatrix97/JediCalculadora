@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import catrisse.marc.utils.Misc;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -21,7 +22,6 @@ public class RegisterActivity extends AppCompatActivity {
     EditText editConfirmPass;
     Button buttonRegister;
     public static String PREFS_NAME = "config";
-    SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +45,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String confpass = editConfirmPass.getText().toString();
                 if(!editName.getText().toString().isEmpty() && !password.isEmpty() && password.equals(confpass)){
                     String userName = editName.getText().toString();
-                    if(registrarUserNuevo(userName, editPass.getText().toString())){
-                        show_snackbar();
+                    try {
+                        if(registrarUserNuevo(userName, editPass.getText().toString())) show_snackbar();
+                    }catch(Misc.RegisterException e){
+                        Toast.makeText(getApplicationContext(),"Error al registrar en la BD",Toast.LENGTH_SHORT).show();
+                    }catch (Misc.UserExitsException e){
+                        Toast.makeText(getApplicationContext(),"Ya existe ese usuario",Toast.LENGTH_SHORT).show();
                     }
+
                 }else{
                     Toast.makeText(getApplicationContext(),"error en el formulario",Toast.LENGTH_SHORT).show();
                 }
@@ -56,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private boolean registrarUserNuevo(String userName, String s) {
+    private boolean registrarUserNuevo(String userName, String s) throws Misc.UserExitsException, Misc.RegisterException {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<User> res = realm.where(User.class).equalTo("nom",userName).findAll();
         if(res.size() == 0){
@@ -72,14 +77,12 @@ public class RegisterActivity extends AppCompatActivity {
                     .and()
                     .equalTo("pass",s).findAll();
             if(res.size() == 0){
-                Toast.makeText(getApplicationContext(),"error al registrar en la BD",Toast.LENGTH_SHORT).show();
+                throw new Misc.RegisterException();
             }
             return res.size() == 1;
 
-
         }else {
-            Toast.makeText(getApplicationContext(),"Ya existe este usuario",Toast.LENGTH_SHORT).show();
-            return false;
+            throw new Misc.UserExitsException();
         }
     }
 
