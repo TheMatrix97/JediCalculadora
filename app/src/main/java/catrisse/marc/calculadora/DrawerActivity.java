@@ -1,6 +1,5 @@
 package catrisse.marc.calculadora;
 
-import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,11 +8,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout drawer;
@@ -36,13 +33,14 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         //configurar el listener del menu
         navigationView.setNavigationItemSelectedListener(this);
         user = (User) getIntent().getSerializableExtra("user");
-        TextView draw_name = findViewById(R.id.textView_drawer_name);
-        TextView draw_surname = findViewById(R.id.textView_drawer_surname);
-        /*
-        TODO ESTO FALLA (CREO)
+        View header = navigationView.getHeaderView(0);
+        TextView draw_name = header.findViewById(R.id.textView_drawer_name);
+        TextView draw_surname = header.findViewById(R.id.textView_drawer_surname);
+
+        //TODO ESTO FALLA (CREO)
         draw_name.setText(user.getNom());
         //todo hay que añadir apellido al register i a user
-        draw_surname.setText(user.getNom());*/
+        draw_surname.setText(user.getSurname());
 
 
     }

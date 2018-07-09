@@ -24,7 +24,8 @@
         android:paddingTop="8dp"
         android:text="Nombre: "
         android:textAlignment="center"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView_drawer_surname"
@@ -33,5 +34,6 @@
         android:paddingTop="8dp"
         android:text="Apellidos: "
         android:textAlignment="center"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 </LinearLayout>

@@ -6,10 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -49,14 +47,15 @@ public class LoginActivity extends AppCompatActivity {
                 String name = editUser.getText().toString();
                 String password = editPass.getText().toString();
                 User aux = new User(name, password);
-                if(estaRegistrado(aux)){
+                User userauth = estaRegistrado(aux);
+                if(userauth != null){
                     cancelarNotificacion();
                     Intent i = new Intent(getApplicationContext(),DrawerActivity.class);
-                    i.putExtra("user", aux);
+                    i.putExtra("user", userauth);
                     startActivity(i);
                 }else{
                     Toast.makeText(getApplicationContext(),"Login incorrecto", Toast.LENGTH_LONG).show();
-                    mostrar_notificacion_estado(aux.getNom());
+                    mostrar_notificacion_estado(aux.getUsername());
                 }
             }
         });
@@ -70,13 +69,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private boolean estaRegistrado(User aux) {
-        String nom = aux.getNom();
+    private User estaRegistrado(User aux) {
+        String nom = aux.getUsername();
         String passw = aux.getPass();
-        RealmResults<User> result = realm.where(User.class).equalTo("nom",nom) //buscamos user con mismo nombre y pass
+        RealmResults<User> result = realm.where(User.class).equalTo("username",nom) //buscamos user con mismo nombre y pass
                 .and()
                 .equalTo("pass",passw).findAll();
-        return result.size() == 1; //si devuelve 1 existe y esta registrado
+        if(result.size() == 1) return realm.copyFromRealm(result.get(0));
+        else return null;
     }
 
     private void iniRealm() {

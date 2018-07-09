@@ -20,6 +20,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText editName;
     EditText editPass;
     EditText editConfirmPass;
+    EditText editNom;
+    EditText editSurname;
     Button buttonRegister;
     public static String PREFS_NAME = "config";
 
@@ -36,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
         editName = findViewById(R.id.editName);
         editPass = findViewById(R.id.editPass);
         editConfirmPass = findViewById(R.id.editConfirmPass);
+        editNom = findViewById(R.id.editNom);
+        editSurname = findViewById(R.id.editSurname);
         buttonRegister = findViewById(R.id.buttonRegister);
         //todo hacerlo mas chachi
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -43,10 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String password = editPass.getText().toString() ;
                 String confpass = editConfirmPass.getText().toString();
-                if(!editName.getText().toString().isEmpty() && !password.isEmpty() && password.equals(confpass)){
+                String nom = editNom.getText().toString();
+                String surname = editSurname.getText().toString();
+                if(!editName.getText().toString().isEmpty() && !password.isEmpty() && password.equals(confpass) && !nom.isEmpty() && !surname.isEmpty()){
                     String userName = editName.getText().toString();
                     try {
-                        if(registrarUserNuevo(userName, editPass.getText().toString())) show_snackbar();
+                        if(registrarUserNuevo(userName, password, nom, surname)) show_snackbar();
                     }catch(Misc.RegisterException e){
                         Toast.makeText(getApplicationContext(),"Error al registrar en la BD",Toast.LENGTH_SHORT).show();
                     }catch (Misc.UserExitsException e){
@@ -61,11 +67,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private boolean registrarUserNuevo(String userName, String s) throws Misc.UserExitsException, Misc.RegisterException {
+    private boolean registrarUserNuevo(String userName, String s, String nom, String surname) throws Misc.UserExitsException, Misc.RegisterException {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<User> res = realm.where(User.class).equalTo("nom",userName).findAll();
+        RealmResults<User> res = realm.where(User.class).equalTo("username",userName).findAll();
         if(res.size() == 0){
-            final User user = new User(userName, s);
+            final User user = new User(userName,nom,surname,s);
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
@@ -73,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
             //check que se ha guardado correctamente (se puede hacer mejor??)
-            res = realm.where(User.class).equalTo("nom",userName)
+            res = realm.where(User.class).equalTo("username",userName)
                     .and()
                     .equalTo("pass",s).findAll();
             if(res.size() == 0){
