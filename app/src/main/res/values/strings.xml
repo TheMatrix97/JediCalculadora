@@ -34,4 +34,9 @@
     <string name="snackbar_action">Login</string>
     <string name="channelName">default</string>
     <string name="channelDescription">Canal para notificar errores de login</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
