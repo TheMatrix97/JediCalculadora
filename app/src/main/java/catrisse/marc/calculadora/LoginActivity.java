@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -50,8 +51,9 @@ public class LoginActivity extends AppCompatActivity {
                 User aux = new User(name, password);
                 if(estaRegistrado(aux)){
                     cancelarNotificacion();
-                   // Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                    //startActivity(i);
+                    Intent i = new Intent(getApplicationContext(),DrawerActivity.class);
+                    i.putExtra("user", aux);
+                    startActivity(i);
                 }else{
                     Toast.makeText(getApplicationContext(),"Login incorrecto", Toast.LENGTH_LONG).show();
                     mostrar_notificacion_estado(aux.getNom());

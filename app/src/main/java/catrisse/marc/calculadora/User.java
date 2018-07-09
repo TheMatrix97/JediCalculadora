@@ -1,10 +1,12 @@
 package catrisse.marc.calculadora;
 
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class User extends RealmObject{
+public class User extends RealmObject implements Serializable{
     @PrimaryKey
     private String nom;
     private String pass;

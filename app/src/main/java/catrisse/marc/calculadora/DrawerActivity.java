@@ -18,6 +18,7 @@ import org.w3c.dom.Text;
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout drawer;
     NavigationView navigationView;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,25 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         toggle.syncState();
         //configurar el listener del menu
         navigationView.setNavigationItemSelectedListener(this);
+        user = (User) getIntent().getSerializableExtra("user");
+        TextView draw_name = findViewById(R.id.textView_drawer_name);
+        TextView draw_surname = findViewById(R.id.textView_drawer_surname);
+        /*
+        TODO ESTO FALLA (CREO)
+        draw_name.setText(user.getNom());
+        //todo hay que añadir apellido al register i a user
+        draw_surname.setText(user.getNom());*/
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
