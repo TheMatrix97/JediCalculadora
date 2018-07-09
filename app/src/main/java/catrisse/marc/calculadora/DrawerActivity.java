@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout drawer;
@@ -50,5 +53,25 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        TextView textViewResult = findViewById(R.id.textViewResult);
+        TextView textViewOp = findViewById(R.id.textView2);
+        outState.putString("operationField", textViewOp.getText().toString());
+        outState.putString("resultField", textViewResult.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        TextView textViewResult = findViewById(R.id.textViewResult);
+        TextView textViewOp = findViewById(R.id.textView2);
+        String textOp = savedInstanceState.getString("operationField");
+        String textRes = savedInstanceState.getString("resultField");
+        textViewOp.setText(textOp);
+        textViewResult.setText(textRes);
     }
 }

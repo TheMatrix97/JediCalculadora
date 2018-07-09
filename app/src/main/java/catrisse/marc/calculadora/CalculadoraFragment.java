@@ -126,7 +126,6 @@ public class CalculadoraFragment extends Fragment {
             d = this.evaluator.evaluate(textViewOp.getText().toString());
         }catch(Exception e){
             this.textViewOp.setError("No valid operation");
-            //Todo INSERT IN DRAWER
             Toast.makeText(getActivity().getApplicationContext(),"La sintaxi no es correcta", Toast.LENGTH_SHORT).show();
         }
         this.textViewResult.setText(String.format(Locale.ENGLISH,"%.2f",d));
