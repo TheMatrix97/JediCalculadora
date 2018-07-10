@@ -36,11 +36,9 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         View header = navigationView.getHeaderView(0);
         TextView draw_name = header.findViewById(R.id.textView_drawer_name);
         TextView draw_surname = header.findViewById(R.id.textView_drawer_surname);
-
-        //TODO ESTO FALLA (CREO)
         draw_name.setText(user.getNom());
-        //todo hay que añadir apellido al register i a user
         draw_surname.setText(user.getSurname());
+        load_firstFrag();
 
 
     }
@@ -65,9 +63,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         .beginTransaction()
                         .replace(R.id.fragment_container,calc)
                         .commit();
-                drawer.closeDrawer(GravityCompat.START);
+                break;
+
+            case R.id.drawer_logout:
+                finish();
                 break;
         }
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -90,4 +92,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         textViewOp.setText(textOp);
         textViewResult.setText(textRes);
     }
+    private void load_firstFrag() {
+        BlankFragment bf = new BlankFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container,bf)
+                .commit();
+    }
+
+
 }

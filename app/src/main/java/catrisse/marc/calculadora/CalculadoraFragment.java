@@ -91,25 +91,6 @@ public class CalculadoraFragment extends Fragment {
     }
 
 
-
-    //Configurar acciones Menú toolbar
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item1:
-                Log.v("I", "Item 1 selected!");
-                break;
-            case R.id.item2:
-                Log.v("I", "Item 2 selected!");
-                break;
-            case R.id.item3:
-                Log.v("I", "Item 3 selected!");
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
     private void iniMisc(){ //Set listener call button
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override

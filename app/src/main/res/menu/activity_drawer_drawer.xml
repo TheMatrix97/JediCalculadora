@@ -2,11 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <group android:id="@+id/drawer_grp_apps" >
+    <group android:id="@+id/drawer_grp_apps" android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_calculadora"
             android:icon="@android:drawable/ic_menu_send"
-            android:title="Calculadora" />
+            android:title="@string/calculadora" />
     </group>
-    <group android:id="@+id/drawer_grp_options" />
+    <item
+        android:id="@+id/drawer_grp_options"
+        android:title="@string/user_options">
+        <menu>
+            <item
+                android:id="@+id/drawer_logout"
+                android:title="@string/logout"
+                android:icon="@android:drawable/ic_notification_clear_all"/>
+        </menu>
+    </item>
+
 </menu>

@@ -5,7 +5,8 @@
     android:id="@+id/parentLayoutRegister"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterActivity"
+    android:imeOptions="actionDone"><!--en principio sirve para cerrar el menú al hacer click en done teclado -->
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -25,7 +26,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="Registration"
+        android:text="@string/registration"
         android:textAlignment="textStart"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +53,7 @@
                 android:id="@+id/editName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
+                android:hint="@string/username"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
@@ -64,7 +65,7 @@
                 android:id="@+id/editNom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nom"
+                android:hint="@string/nom"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
@@ -76,7 +77,7 @@
                 android:id="@+id/editSurname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cognom"
+                android:hint="@string/cognom"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
@@ -88,7 +89,7 @@
                 android:id="@+id/editPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -100,7 +101,7 @@
                 android:id="@+id/editConfirmPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirm Password"
+                android:hint="@string/confirm_password"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -108,7 +109,7 @@
             android:id="@+id/buttonRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register" />
+            android:text="@string/register" />
 
     </LinearLayout>
 
