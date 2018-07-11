@@ -68,6 +68,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         .replace(R.id.fragment_container,calc)
                         .commit();
                 break;
+            case R.id.drawer_game:
+                GameFragment gf = new GameFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container,gf)
+                        .commit();
+                break;
 
             case R.id.drawer_logout:
                 finish();

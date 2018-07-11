@@ -7,6 +7,10 @@
             android:id="@+id/drawer_calculadora"
             android:icon="@android:drawable/ic_menu_send"
             android:title="@string/calculadora" />
+        <item
+            android:id="@+id/drawer_game"
+            android:icon="@android:drawable/ic_menu_send"
+            android:title="@string/game" />
     </group>
     <item
         android:id="@+id/drawer_grp_options"
