@@ -42,8 +42,6 @@ public class MemoryGameController {
         res.add(R.drawable.alex);res.add(R.drawable.dr_boom);res.add(R.drawable.dummy);res.add(R.drawable.hex);
         res.add(R.drawable.leeroy);res.add(R.drawable.lord);res.add(R.drawable.molino_tormenta); res.add(R.drawable.mana);
         return res;
-
-        //todo add all images
     }
 
 }
