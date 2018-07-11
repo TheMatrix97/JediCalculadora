@@ -4,6 +4,8 @@ package catrisse.marc.calculadora;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -71,9 +73,25 @@ public class CalculadoraFragment extends Fragment {
     };
 
     public CalculadoraFragment() {
-        // Required empty public constructor
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState != null){
+            String textOp = savedInstanceState.getString("operationField");
+            String textRes = savedInstanceState.getString("resultField");
+            textViewOp.setText(textOp);
+            textViewResult.setText(textRes);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("operationField", textViewOp.getText().toString());
+        outState.putString("resultField", textViewResult.getText().toString());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -153,5 +171,6 @@ public class CalculadoraFragment extends Fragment {
         textViewOp.setText("");
         textViewResult.setText("");
     }
+
 
 }

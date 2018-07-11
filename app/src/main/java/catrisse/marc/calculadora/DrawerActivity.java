@@ -1,5 +1,8 @@
 package catrisse.marc.calculadora;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -38,10 +41,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         TextView draw_surname = header.findViewById(R.id.textView_drawer_surname);
         draw_name.setText(user.getNom());
         draw_surname.setText(user.getSurname());
-        load_firstFrag();
+        if(savedInstanceState == null) load_firstFrag();
 
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -73,25 +77,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         return true;
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        TextView textViewResult = findViewById(R.id.textViewResult);
-        TextView textViewOp = findViewById(R.id.textView2);
-        outState.putString("operationField", textViewOp.getText().toString());
-        outState.putString("resultField", textViewResult.getText().toString());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        TextView textViewResult = findViewById(R.id.textViewResult);
-        TextView textViewOp = findViewById(R.id.textView2);
-        String textOp = savedInstanceState.getString("operationField");
-        String textRes = savedInstanceState.getString("resultField");
-        textViewOp.setText(textOp);
-        textViewResult.setText(textRes);
-    }
     private void load_firstFrag() {
         BlankFragment bf = new BlankFragment();
         getSupportFragmentManager()
