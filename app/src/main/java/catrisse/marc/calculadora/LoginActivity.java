@@ -119,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         mNotificationManager.notify(idNotification,notification);
     }
 
+
     private void cancelarNotificacion(){
         NotificationManager
                 mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
