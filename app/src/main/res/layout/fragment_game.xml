@@ -43,15 +43,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imageButton4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/hearth_cardback" />
-
-                <ImageButton
-                    android:id="@+id/imageButton3"
+                    android:id="@+id/imageButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -67,12 +59,21 @@
                     android:src="@drawable/hearth_cardback" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/imageButton3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
                     android:src="@drawable/hearth_cardback" />
+
+                <ImageButton
+                    android:id="@+id/imageButton4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/hearth_cardback" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -82,15 +83,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imageButton8"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/hearth_cardback" />
-
-                <ImageButton
-                    android:id="@+id/imageButton7"
+                    android:id="@+id/imageButton5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -106,12 +99,21 @@
                     android:src="@drawable/hearth_cardback" />
 
                 <ImageButton
-                    android:id="@+id/imageButton5"
+                    android:id="@+id/imageButton7"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
                     android:src="@drawable/hearth_cardback" />
+
+                <ImageButton
+                    android:id="@+id/imageButton8"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/hearth_cardback" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -121,15 +123,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imageButton12"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/hearth_cardback" />
-
-                <ImageButton
-                    android:id="@+id/imageButton11"
+                    android:id="@+id/imageButton9"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -145,12 +139,21 @@
                     android:src="@drawable/hearth_cardback" />
 
                 <ImageButton
-                    android:id="@+id/imageButton9"
+                    android:id="@+id/imageButton11"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
                     android:src="@drawable/hearth_cardback" />
+
+                <ImageButton
+                    android:id="@+id/imageButton12"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/hearth_cardback" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -160,15 +163,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imageButton16"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/hearth_cardback" />
-
-                <ImageButton
-                    android:id="@+id/imageButton15"
+                    android:id="@+id/imageButton13"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -184,12 +179,21 @@
                     android:src="@drawable/hearth_cardback" />
 
                 <ImageButton
-                    android:id="@+id/imageButton13"
+                    android:id="@+id/imageButton15"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
                     android:src="@drawable/hearth_cardback" />
+
+                <ImageButton
+                    android:id="@+id/imageButton16"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/hearth_cardback" />
+
             </LinearLayout>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>

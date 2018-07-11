@@ -49,4 +49,6 @@
     <string name="password">Password</string>
     <string name="register">Register</string>
     <string name="game">Game</string>
+    <string name="start">Start</string>
+    <string name="reset">Reset</string>
 </resources>

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class CalculadoraFragment extends Fragment {
 
     public CalculadoraFragment() {
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
