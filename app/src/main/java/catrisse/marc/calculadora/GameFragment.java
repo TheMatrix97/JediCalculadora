@@ -73,9 +73,16 @@ public class GameFragment extends Fragment {
                     publishProgress(progress);
                 } catch (InterruptedException e) {
                     e.printStackTrace(); //no se deberia interrumpir nunca...
+                    break;
                 }
             }
             return null;
+        }
+
+        @Override
+        protected void onCancelled() { //reset Timer
+            time.setText("0");
+            super.onCancelled();
         }
 
         @Override
@@ -88,5 +95,12 @@ public class GameFragment extends Fragment {
         time.setText(val.toString());
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(timerTask != null && timerTask.getStatus() == AsyncTask.Status.RUNNING) {
+            timerTask.cancel(true);
+            timerTask = null; //limpiamos timer task
+        }
+    }
 }
