@@ -22,7 +22,6 @@ public class RetrofitClient {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .client(getUnsafeOkHttpClient())
                     .build();
         }
         return retrofit;
@@ -62,7 +61,6 @@ public class RetrofitClient {
                     return true;
                 }
             });
-
             OkHttpClient okHttpClient = builder.build();
             return okHttpClient;
         } catch (Exception e) {
