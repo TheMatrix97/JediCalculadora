@@ -24,7 +24,7 @@ import catrisse.marc.utils.CoolImageFlipper;
  */
 public class GameFragment extends Fragment {
     View layoutGame;
-    TimerTask timerTask;
+    Timer timerTask;
     TextView time;
     MemoryGameController controller;
 
@@ -48,18 +48,19 @@ public class GameFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.game_start:
-                if(timerTask == null ||(timerTask.getStatus() != AsyncTask.Status.RUNNING)){
-                    timerTask = new TimerTask();
-                    timerTask.execute();
+                if(timerTask == null || timerTask.isInterrupted()){
+                    timerTask = new Timer();
+                    timerTask.start();
                     controller = new MemoryGameController(getContext());
                     link_listeners();
 
                 }
                 return true;
             case R.id.game_stop:
-                if(timerTask != null && timerTask.getStatus() == AsyncTask.Status.RUNNING) {
-                    timerTask.cancel(true);
+                if(timerTask != null && timerTask.isAlive()) {
+                    timerTask.interrupt();
                     timerTask = null; //limpiamos timer task
+                    time.setText("0");
                     reset_game(true);
                 }
                 return true;
@@ -75,7 +76,7 @@ public class GameFragment extends Fragment {
         for(Integer aux : lista){
             ImageButton carta = layoutGame.findViewById(aux);
             Drawable.ConstantState c1 = carta.getDrawable().getConstantState();
-            if(c1 != null && !c1.equals(backconstant)){
+            if(c1 != null && !c1.equals(backconstant) && (!controller.isDrawableYaEcontrado(c1) || total)){
                 flipper.flipImage(back,carta);
             }
             if(total) carta.setOnClickListener(null);
@@ -102,6 +103,9 @@ public class GameFragment extends Fragment {
                             //esperar
                             WaitTask wt = new WaitTask();
                             wt.execute();
+                        }else{
+                            //hacemos que esta segunda no sea clickeable como la primera
+                            b.setClickable(false);
                         }
                     }
                 }
@@ -116,49 +120,43 @@ public class GameFragment extends Fragment {
         inflater.inflate(R.menu.activity_drawer_game, menu);
     }
 
-    private class TimerTask extends AsyncTask<Void, Integer, Void> {
+    private class Timer extends Thread{
         @Override
-        protected Void doInBackground(Void... voids) {
-            Integer progress = 0;
-            while(!isCancelled()){
+        public void run() {
+            int contador = 0;
+            while(!Thread.interrupted()){
                 try {
                     Thread.sleep(1000);
-                    progress += 1000;
-                    publishProgress(progress);
+                    contador++;
+                    update_timer(contador);
                 } catch (InterruptedException e) {
-                    e.printStackTrace(); //no se deberia interrumpir nunca...
+                    e.printStackTrace();
                     break;
                 }
             }
-            return null;
-        }
-
-        @Override
-        protected void onCancelled() { //reset Timer
-            time.setText("0");
-            super.onCancelled();
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            update_timer(values[0]/1000);
         }
     }
 
-    private void update_timer(Integer val) {
-        time.setText(val.toString());
+
+    private void update_timer(final Integer val) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                time.setText(val.toString());
+            }
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(timerTask != null && timerTask.getStatus() == AsyncTask.Status.RUNNING) {
-            timerTask.cancel(true);
+        if(timerTask != null && timerTask.isAlive()) {
+            timerTask.interrupt();
             timerTask = null; //limpiamos timer task
         }
     }
 
-    private class WaitTask extends AsyncTask<Void,Void,Void>{
+    private class WaitTask extends AsyncTask<Void,Void,Boolean>{
         @Override
         protected void onPreExecute() {
             setClickableAllCards(false);
@@ -166,30 +164,32 @@ public class GameFragment extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Boolean doInBackground(Void... voids) {
             //disable all cards, tengo que comparar
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                return false;
             }
-            return null;
+            return true;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(Boolean aVoid) {
             controller.setFirstCardFlipped(null); //post execute
             setClickableAllCards(true);
             reset_game(false);
             super.onPostExecute(aVoid);
         }
 
-        private void setClickableAllCards(boolean state) {
-            ArrayList<Integer> lista = controller.getIdButtons();
-            for(Integer i : lista){
-                ImageButton aux = layoutGame.findViewById(i);
-                aux.setClickable(state);
-            }
+
+    }
+    private void setClickableAllCards(boolean state) {
+        ArrayList<Integer> lista = controller.getIdButtons();
+        for(Integer i : lista){
+            ImageButton aux = layoutGame.findViewById(i);
+            if(!controller.isDrawableYaEcontrado(aux.getDrawable().getConstantState())) aux.setClickable(state); //no queremos alterar el estado de cartas ya giradas
         }
     }
 }

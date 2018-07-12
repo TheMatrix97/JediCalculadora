@@ -13,6 +13,7 @@ public class MemoryGameController {
     private int parejas;
     private ArrayList<Integer> drawables;
     private ArrayList<Integer> idButtons;
+    private ArrayList<Drawable.ConstantState> parejasencontradas;
     private Context c;
 
     public MemoryGameController(Context c) {
@@ -21,6 +22,7 @@ public class MemoryGameController {
         this.c = c;
         this.firstCardFlipped = null;
         this.parejas = 0;
+        this.parejasencontradas = new ArrayList<>();
     }
 
     public ArrayList<Drawable> getMapImages(){ //devuelve en orden las imagenes para cada botón (desordenadas)
@@ -60,6 +62,7 @@ public class MemoryGameController {
 
     public void setFirstCardFlipped(ImageButton firstCardFlipped) {
         this.firstCardFlipped = firstCardFlipped;
+        if(firstCardFlipped != null) this.firstCardFlipped.setClickable(false); //desactivamos click en la primera carta girada
     }
 
     public boolean compareCartas(Drawable drawable) {
@@ -67,12 +70,16 @@ public class MemoryGameController {
         Drawable.ConstantState dc = drawable.getConstantState();
         if(fc != null && dc != null){
             if(fc.equals(dc)){
-                parejas++;
+                parejasencontradas.add(fc);
+                this.firstCardFlipped = null;
                 return true;
             }
             return false;
         }
         return false;
+    }
+    public boolean isDrawableYaEcontrado(Drawable.ConstantState d){
+        return parejasencontradas.contains(d);
     }
 
 }
