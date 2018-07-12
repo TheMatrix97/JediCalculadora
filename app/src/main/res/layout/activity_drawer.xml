@@ -22,7 +22,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:theme="@style/Theme.AppCompat"/>
+            android:theme="@style/Theme.AppCompat"
+            app:title="@string/titleapp"/>
 
         <FrameLayout
             android:id="@+id/fragment_container"

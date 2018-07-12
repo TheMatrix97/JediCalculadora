@@ -1,10 +1,12 @@
 package catrisse.marc.calculadora;
 
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.Locale;
 
 import catrisse.marc.utils.CoolImageFlipper;
 
@@ -41,6 +45,7 @@ public class GameFragment extends Fragment {
         layoutGame = inflater.inflate(R.layout.fragment_game, container, false);
         time = layoutGame.findViewById(R.id.drawerTextTime);
         timerTask = null;
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.game);
         return layoutGame;
     }
 
@@ -123,11 +128,11 @@ public class GameFragment extends Fragment {
     private class Timer extends Thread{
         @Override
         public void run() {
-            int contador = 0;
+            Long contador = 0L;
             while(!Thread.interrupted()){
                 try {
                     Thread.sleep(1000);
-                    contador++;
+                    contador += 1000;
                     update_timer(contador);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -138,11 +143,13 @@ public class GameFragment extends Fragment {
     }
 
 
-    private void update_timer(final Integer val) {
+    private void update_timer(final Long val) {
+        //Lo ejecutamos en el Thread que contiene la UI para poder modificar el textview
         getActivity().runOnUiThread(new Runnable() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void run() {
-                time.setText(val.toString());
+                time.setText(String.format("%tT",val));
             }
         });
     }
