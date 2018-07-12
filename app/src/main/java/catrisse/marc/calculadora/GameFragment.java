@@ -17,8 +17,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.Locale;
 
 import catrisse.marc.utils.CoolImageFlipper;
 

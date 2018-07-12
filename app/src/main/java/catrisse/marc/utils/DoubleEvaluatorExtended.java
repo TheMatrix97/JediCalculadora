@@ -1,10 +1,10 @@
 package catrisse.marc.utils;
 
-import java.util.Iterator;
-
 import com.fathzer.soft.javaluator.DoubleEvaluator;
 import com.fathzer.soft.javaluator.Function;
 import com.fathzer.soft.javaluator.Parameters;
+
+import java.util.Iterator;
 
 /** A subclass of DoubleEvaluator that supports SQRT function.*/
 public class DoubleEvaluatorExtended extends DoubleEvaluator {

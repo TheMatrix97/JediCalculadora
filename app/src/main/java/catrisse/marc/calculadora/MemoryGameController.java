@@ -6,7 +6,6 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 public class MemoryGameController {
     private ImageButton firstCardFlipped;
