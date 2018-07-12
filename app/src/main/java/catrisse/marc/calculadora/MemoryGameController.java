@@ -28,6 +28,11 @@ public class MemoryGameController {
         Collections.shuffle(res); //desordenamos
         return res;
     }
+
+    public ArrayList<Integer> getIdButtons() {
+        return idButtons;
+    }
+
     private ArrayList<Integer> load_button_id() {
         ArrayList<Integer> res = new ArrayList<>(16);
         res.add(R.id.imageButton);res.add(R.id.imageButton2);res.add(R.id.imageButton3);res.add(R.id.imageButton4);

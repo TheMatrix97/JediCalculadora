@@ -1,6 +1,7 @@
 package catrisse.marc.calculadora;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import catrisse.marc.utils.CoolImageFlipper;
 
 
 /**
@@ -20,6 +27,7 @@ public class GameFragment extends Fragment {
     View layoutGame;
     TimerTask timerTask;
     TextView time;
+    MemoryGameController controller;
 
     public GameFragment() {
         // Required empty public constructor
@@ -44,16 +52,53 @@ public class GameFragment extends Fragment {
                 if(timerTask == null ||(timerTask.getStatus() != AsyncTask.Status.RUNNING)){
                     timerTask = new TimerTask();
                     timerTask.execute();
+                    controller = new MemoryGameController(getContext());
+                    link_listeners();
+
                 }
                 return true;
             case R.id.game_stop:
                 if(timerTask != null && timerTask.getStatus() == AsyncTask.Status.RUNNING) {
                     timerTask.cancel(true);
                     timerTask = null; //limpiamos timer task
+                    reset_game();
                 }
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void reset_game() {
+        ArrayList<Integer> lista = controller.getIdButtons();
+        Drawable back = getResources().getDrawable(R.drawable.hearth_cardback);
+        Drawable.ConstantState backconstant = back.getConstantState();
+        CoolImageFlipper flipper = new CoolImageFlipper(getContext());
+        for(Integer aux : lista){
+            ImageButton carta = layoutGame.findViewById(aux);
+            Drawable.ConstantState c1 = carta.getDrawable().getConstantState();
+            if(c1 != null && !c1.equals(backconstant)){
+                flipper.flipImage(back,carta);
+            }
+            carta.setOnClickListener(null);
+        }
+    }
+
+    private void link_listeners() {
+        ArrayList<Integer> lista = controller.getIdButtons();
+        final ArrayList<Drawable> images = controller.getMapImages();
+        int contador = 0;
+        final CoolImageFlipper flipper = new CoolImageFlipper(getContext());
+        for(final Integer aux : lista){
+            final int finalContador = contador;
+            layoutGame.findViewById(aux).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageButton b = layoutGame.findViewById(aux);
+                    flipper.flipImage(images.get(finalContador),b);
+                }
+            });
+            contador++;
+        }
     }
 
     @Override
