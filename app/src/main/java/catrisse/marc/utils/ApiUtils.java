@@ -7,8 +7,8 @@ public class ApiUtils {
 
     public static final String BASE_URL = "http://178.128.166.139:4000/";
 
-    public static ApiService getAPIService() {
+    public static APIService getAPIService() {
 
-        return RetrofitClient.getClient(BASE_URL).create(ApiService.class);
+        return RetrofitClient.getClient(BASE_URL).create(APIService.class);
     }
 }

@@ -11,7 +11,7 @@ import retrofit2.Response;
 
 public class ApiClient {
     //hacer peticion
-    private ApiService apiService;
+    private APIService apiService;
 
     public ApiClient() {
         this.apiService = ApiUtils.getAPIService();

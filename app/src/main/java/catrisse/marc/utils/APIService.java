@@ -11,9 +11,9 @@ import retrofit2.http.Path;
 
 public interface APIService {
 
-    @POST("v1/categorias")
-    Call<PostPuntuacion> createCategory(@Body PostPuntuacion category);
+    @POST("/puntuaciones")
+    Call<PostPuntuacion> createPuntuacion(@Body PostPuntuacion category);
 
-    @GET("v1/products")
+    @GET("/puntuaciones")
     Call<GetPuntuacion> getPuntuaciones();
 }
