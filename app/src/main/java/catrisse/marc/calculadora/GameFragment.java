@@ -15,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 import catrisse.marc.utils.CoolImageFlipper;
 
@@ -61,14 +60,14 @@ public class GameFragment extends Fragment {
                 if(timerTask != null && timerTask.getStatus() == AsyncTask.Status.RUNNING) {
                     timerTask.cancel(true);
                     timerTask = null; //limpiamos timer task
-                    reset_game();
+                    reset_game(true);
                 }
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void reset_game() {
+    private void reset_game(boolean total) {
         ArrayList<Integer> lista = controller.getIdButtons();
         Drawable back = getResources().getDrawable(R.drawable.hearth_cardback);
         Drawable.ConstantState backconstant = back.getConstantState();
@@ -79,7 +78,7 @@ public class GameFragment extends Fragment {
             if(c1 != null && !c1.equals(backconstant)){
                 flipper.flipImage(back,carta);
             }
-            carta.setOnClickListener(null);
+            if(total) carta.setOnClickListener(null);
         }
     }
 
@@ -95,6 +94,16 @@ public class GameFragment extends Fragment {
                 public void onClick(View v) {
                     ImageButton b = layoutGame.findViewById(aux);
                     flipper.flipImage(images.get(finalContador),b);
+                    if(controller.getFirstCardFlipped() == null){
+                        controller.setFirstCardFlipped(b);
+                    }else{
+                        //Se ha levantado otra, hay que comparar
+                        if(!controller.compareCartas(images.get(finalContador))){ //si estan mal hay que darles la vuelta
+                            //esperar
+                            WaitTask wt = new WaitTask();
+                            wt.execute();
+                        }
+                    }
                 }
             });
             contador++;
@@ -146,6 +155,41 @@ public class GameFragment extends Fragment {
         if(timerTask != null && timerTask.getStatus() == AsyncTask.Status.RUNNING) {
             timerTask.cancel(true);
             timerTask = null; //limpiamos timer task
+        }
+    }
+
+    private class WaitTask extends AsyncTask<Void,Void,Void>{
+        @Override
+        protected void onPreExecute() {
+            setClickableAllCards(false);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //disable all cards, tengo que comparar
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            controller.setFirstCardFlipped(null); //post execute
+            setClickableAllCards(true);
+            reset_game(false);
+            super.onPostExecute(aVoid);
+        }
+
+        private void setClickableAllCards(boolean state) {
+            ArrayList<Integer> lista = controller.getIdButtons();
+            for(Integer i : lista){
+                ImageButton aux = layoutGame.findViewById(i);
+                aux.setClickable(state);
+            }
         }
     }
 }

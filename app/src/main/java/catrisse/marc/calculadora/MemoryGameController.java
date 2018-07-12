@@ -2,20 +2,25 @@ package catrisse.marc.calculadora;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class MemoryGameController {
-
-    ArrayList<Integer> drawables;
-    ArrayList<Integer> idButtons;
-    Context c;
+    private ImageButton firstCardFlipped;
+    private int parejas;
+    private ArrayList<Integer> drawables;
+    private ArrayList<Integer> idButtons;
+    private Context c;
 
     public MemoryGameController(Context c) {
         this.drawables = load_drawables();
         this.idButtons = load_button_id();
         this.c = c;
+        this.firstCardFlipped = null;
+        this.parejas = 0;
     }
 
     public ArrayList<Drawable> getMapImages(){ //devuelve en orden las imagenes para cada botón (desordenadas)
@@ -47,6 +52,27 @@ public class MemoryGameController {
         res.add(R.drawable.alex);res.add(R.drawable.dr_boom);res.add(R.drawable.dummy);res.add(R.drawable.hex);
         res.add(R.drawable.leeroy);res.add(R.drawable.lord);res.add(R.drawable.molino_tormenta); res.add(R.drawable.mana);
         return res;
+    }
+
+    public ImageButton getFirstCardFlipped() {
+        return firstCardFlipped;
+    }
+
+    public void setFirstCardFlipped(ImageButton firstCardFlipped) {
+        this.firstCardFlipped = firstCardFlipped;
+    }
+
+    public boolean compareCartas(Drawable drawable) {
+        Drawable.ConstantState fc = firstCardFlipped.getDrawable().getConstantState();
+        Drawable.ConstantState dc = drawable.getConstantState();
+        if(fc != null && dc != null){
+            if(fc.equals(dc)){
+                parejas++;
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
 }
