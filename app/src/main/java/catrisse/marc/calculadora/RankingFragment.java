@@ -1,7 +1,6 @@
 package catrisse.marc.calculadora;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -42,6 +41,9 @@ public class RankingFragment extends Fragment {
     }
 
     private void configurar_pager() {
+        PagerAdapter adapter = new PagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPager vp = rootView.findViewById(R.id.pager);
+        vp.setAdapter(adapter);
 
     }
 
@@ -56,18 +58,20 @@ public class RankingFragment extends Fragment {
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
-
+            collection = new ArrayList<>();
+            collection.add(new LocalRankingFragment());
+            collection.add(new GlobalRankingFragment());
         }
 
 
         @Override
         public Fragment getItem(int position) {
-            return null;
+            return collection.get(position);
         }
 
         @Override
         public int getCount() {
-            return 0;
+            return collection.size();
         }
     }
 
