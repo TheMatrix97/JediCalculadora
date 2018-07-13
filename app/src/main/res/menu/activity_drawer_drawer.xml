@@ -11,6 +11,10 @@
             android:id="@+id/drawer_game"
             android:icon="@android:drawable/ic_menu_send"
             android:title="@string/game" />
+        <item
+            android:id="@+id/drawer_ranking"
+            android:icon="@android:drawable/ic_menu_send"
+            android:title="Ranking" />
     </group>
     <item
         android:id="@+id/drawer_grp_options"

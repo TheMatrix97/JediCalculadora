@@ -21,6 +21,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        //Generamos la toolbar y hacemos que sea la actionbar de la activity
         Toolbar toolbar = findViewById(R.id.toolbar_drawer);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -73,6 +74,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         .commit();
                 break;
 
+            case R.id.drawer_ranking:
+                RankingFragment rf = new RankingFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container,rf)
+                        .commit();
+                break;
             case R.id.drawer_logout:
                 finish();
                 break;
