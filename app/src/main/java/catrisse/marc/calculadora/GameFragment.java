@@ -2,6 +2,7 @@ package catrisse.marc.calculadora;
 
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,7 +45,14 @@ public class GameFragment extends Fragment {
         time = layoutGame.findViewById(R.id.drawerTextTime);
         timerTask = null;
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.game);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return layoutGame;
+    }
+
+    @Override
+    public void onDestroy() {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        super.onDestroy();
     }
 
     @Override
@@ -63,7 +71,7 @@ public class GameFragment extends Fragment {
                 if(timerTask != null && timerTask.isAlive()) {
                     timerTask.interrupt();
                     timerTask = null; //limpiamos timer task
-                    time.setText("0");
+                    update_timer(0L);
                     reset_game(true);
                 }
                 return true;
