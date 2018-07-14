@@ -1,17 +1,17 @@
 package catrisse.marc.calculadora;
 
 
-import java.io.Serializable;
-
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class User extends RealmObject implements Serializable{
+public class User extends RealmObject{
     @PrimaryKey
     private String username;
     private String nom;
     private String surname;
     private String pass;
+    private RealmList<Puntuacion> puntuaciones;
 
     public User() {
     }
@@ -21,11 +21,15 @@ public class User extends RealmObject implements Serializable{
         this.pass = pass;
         this.surname = surname;
         this.nom = nom;
+        this.puntuaciones = new RealmList<>();
     }
 
     public User(String username, String pass) {
         this.username = username;
         this.pass = pass;
+    }
+    public void addPuntuacion(Puntuacion a){
+        puntuaciones.add(a);
     }
 
     public String getUsername() {

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import catrisse.marc.utils.BDController;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -25,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     Button register;
     final int idNotification = 2;
-    Realm realm;
+    BDController bd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void ini() {
-        iniRealm();
+        bd = BDController.getInstance(getApplicationContext());
         Toolbar tb = findViewById(R.id.toolbar2);
         editPass = findViewById(R.id.editTextPass);
         editUser = findViewById(R.id.editTextUser);
@@ -47,11 +48,11 @@ public class LoginActivity extends AppCompatActivity {
                 String name = editUser.getText().toString();
                 String password = editPass.getText().toString();
                 User aux = new User(name, password);
-                User userauth = estaRegistrado(aux);
+                User userauth = bd.estaRegistrado(aux);
                 if(userauth != null){
                     cancelarNotificacion();
                     Intent i = new Intent(getApplicationContext(),DrawerActivity.class);
-                    i.putExtra("user", userauth);
+                    i.putExtra("user", userauth.getUsername());
                     startActivity(i);
                 }else{
                     Toast.makeText(getApplicationContext(),"Login incorrecto", Toast.LENGTH_LONG).show();
@@ -69,20 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private User estaRegistrado(User aux) {
-        String nom = aux.getUsername();
-        String passw = aux.getPass();
-        RealmResults<User> result = realm.where(User.class).equalTo("username",nom) //buscamos user con mismo nombre y pass
-                .and()
-                .equalTo("pass",passw).findAll();
-        if(result.size() == 1) return realm.copyFromRealm(result.get(0));
-        else return null;
-    }
 
-    private void iniRealm() {
-        Realm.init(getApplicationContext());
-        this.realm = Realm.getDefaultInstance();
-    }
 
     private void mostrar_notificacion_estado(String nom) {
         //mas info https://developer.android.com/training/notify-user/build-notification

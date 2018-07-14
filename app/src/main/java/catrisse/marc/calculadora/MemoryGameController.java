@@ -7,6 +7,8 @@ import android.widget.ImageButton;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import catrisse.marc.utils.Misc;
+
 public class MemoryGameController {
     private ImageButton firstCardFlipped;
     private int parejas;
@@ -14,6 +16,7 @@ public class MemoryGameController {
     private ArrayList<Integer> idButtons;
     private ArrayList<Drawable.ConstantState> parejasencontradas;
     private Context c;
+
 
     public MemoryGameController(Context c) {
         this.drawables = load_drawables();
@@ -64,13 +67,14 @@ public class MemoryGameController {
         if(firstCardFlipped != null) this.firstCardFlipped.setClickable(false); //desactivamos click en la primera carta girada
     }
 
-    public boolean compareCartas(Drawable drawable) {
+    public boolean compareCartas(Drawable drawable) throws Misc.GameFinalizado {
         Drawable.ConstantState fc = firstCardFlipped.getDrawable().getConstantState();
         Drawable.ConstantState dc = drawable.getConstantState();
         if(fc != null && dc != null){
             if(fc.equals(dc)){
                 parejasencontradas.add(fc);
                 this.firstCardFlipped = null;
+                if(parejasencontradas.size() == drawables.size()) throw new Misc.GameFinalizado();
                 return true;
             }
             return false;
@@ -80,5 +84,6 @@ public class MemoryGameController {
     public boolean isDrawableYaEcontrado(Drawable.ConstantState d){
         return parejasencontradas.contains(d);
     }
+
 
 }

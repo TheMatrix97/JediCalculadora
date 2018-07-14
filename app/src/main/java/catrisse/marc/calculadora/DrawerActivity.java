@@ -12,16 +12,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import catrisse.marc.utils.BDController;
+import catrisse.marc.utils.Misc;
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout drawer;
     NavigationView navigationView;
     User user;
+    BDController bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
         //Generamos la toolbar y hacemos que sea la actionbar de la activity
+        bd = BDController.getInstance(getApplicationContext());
         Toolbar toolbar = findViewById(R.id.toolbar_drawer);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -33,7 +40,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         toggle.syncState();
         //configurar el listener del menu
         navigationView.setNavigationItemSelectedListener(this);
-        user = (User) getIntent().getSerializableExtra("user");
+        try {
+            user = bd.load_user(getIntent().getStringExtra("user"));
+        } catch (Misc.UserNotFound userNotFound) {
+            userNotFound.printStackTrace();
+        }
         View header = navigationView.getHeaderView(0);
         TextView draw_name = header.findViewById(R.id.textView_drawer_name);
         TextView draw_surname = header.findViewById(R.id.textView_drawer_surname);
@@ -96,6 +107,5 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 .replace(R.id.fragment_container,bf)
                 .commit();
     }
-
 
 }

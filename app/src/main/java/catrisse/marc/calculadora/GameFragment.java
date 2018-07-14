@@ -2,10 +2,14 @@ package catrisse.marc.calculadora;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -16,10 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import catrisse.marc.utils.CoolImageFlipper;
+import catrisse.marc.utils.Misc;
 
 
 /**
@@ -64,6 +70,7 @@ public class GameFragment extends Fragment {
                     timerTask.start();
                     controller = new MemoryGameController(getContext());
                     link_listeners();
+                    setClickableAllCards(true);
 
                 }
                 return true;
@@ -110,19 +117,31 @@ public class GameFragment extends Fragment {
                         controller.setFirstCardFlipped(b);
                     }else{
                         //Se ha levantado otra, hay que comparar
-                        if(!controller.compareCartas(images.get(finalContador))){ //si estan mal hay que darles la vuelta
-                            //esperar
-                            WaitTask wt = new WaitTask();
-                            wt.execute();
-                        }else{
-                            //hacemos que esta segunda no sea clickeable como la primera
-                            b.setClickable(false);
+                        try {
+                            if (!controller.compareCartas(images.get(finalContador))) { //si estan mal hay que darles la vuelta
+                                //esperar
+                                WaitTask wt = new WaitTask();
+                                wt.execute();
+                            } else {
+                                //hacemos que esta segunda no sea clickeable como la primera
+                                b.setClickable(false);
+                            }
+                        }catch (Misc.GameFinalizado e){
+                            //fin del juego setAll no clickable y popout para preguntar si guardar la partida
+                            fin_juego();
                         }
                     }
                 }
             });
             contador++;
         }
+    }
+
+    private void fin_juego() {
+        long time = timerTask.getContador();
+        timerTask.interrupt();
+        ConfirmFinishGame c = new ConfirmFinishGame();
+        c.show(getFragmentManager(), "go");
     }
 
     @Override
@@ -132,9 +151,10 @@ public class GameFragment extends Fragment {
     }
 
     private class Timer extends Thread{
+        private Long contador = 0L;
         @Override
         public void run() {
-            Long contador = 0L;
+            contador = 0L;
             while(!Thread.interrupted()){
                 try {
                     Thread.sleep(1000);
@@ -145,6 +165,10 @@ public class GameFragment extends Fragment {
                     break;
                 }
             }
+        }
+
+        public Long getContador() {
+            return contador;
         }
     }
 

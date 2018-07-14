@@ -12,5 +12,15 @@ public abstract class Misc {
             super();
         }
     }
+    public static class GameFinalizado extends Exception{
+        public GameFinalizado() {
+            super();
+        }
+    }
+    public static class UserNotFound extends Exception{
+        public UserNotFound() {
+            super();
+        }
+    }
 
 }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import catrisse.marc.utils.BDController;
 import catrisse.marc.utils.Misc;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -20,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText editNom;
     EditText editSurname;
     Button buttonRegister;
+    BDController bd;
     public static String PREFS_NAME = "config";
 
     @Override
@@ -31,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void ini() {
         //OnChange editText??
-
+        bd = BDController.getInstance(getApplicationContext());
         editName = findViewById(R.id.editName);
         editPass = findViewById(R.id.editPass);
         editConfirmPass = findViewById(R.id.editConfirmPass);
@@ -49,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(!editName.getText().toString().isEmpty() && !password.isEmpty() && password.equals(confpass) && !nom.isEmpty() && !surname.isEmpty()){
                     String userName = editName.getText().toString();
                     try {
-                        if(registrarUserNuevo(userName, password, nom, surname)) show_snackbar();
+                        if(bd.registrarUserNuevo(userName, password, nom, surname)) show_snackbar();
                     }catch(Misc.RegisterException e){
                         Toast.makeText(getApplicationContext(),"Error al registrar en la BD",Toast.LENGTH_SHORT).show();
                     }catch (Misc.UserExitsException e){
@@ -62,31 +64,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private boolean registrarUserNuevo(String userName, String s, String nom, String surname) throws Misc.UserExitsException, Misc.RegisterException {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<User> res = realm.where(User.class).equalTo("username",userName).findAll();
-        if(res.size() == 0){
-            final User user = new User(userName,nom,surname,s);
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.copyToRealm(user);
-                }
-            });
-            //check que se ha guardado correctamente (se puede hacer mejor??)
-            res = realm.where(User.class).equalTo("username",userName)
-                    .and()
-                    .equalTo("pass",s).findAll();
-            if(res.size() == 0){
-                throw new Misc.RegisterException();
-            }
-            return res.size() == 1;
-
-        }else {
-            throw new Misc.UserExitsException();
-        }
     }
 
     private void show_snackbar() {
