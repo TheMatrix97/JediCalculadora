@@ -108,4 +108,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 .commit();
     }
 
+    public User getUser() {
+        return user;
+    }
 }

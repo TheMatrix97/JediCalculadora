@@ -2,6 +2,7 @@ package catrisse.marc.utils;
 
 import android.content.Context;
 
+import catrisse.marc.calculadora.Puntuacion;
 import catrisse.marc.calculadora.User;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -58,10 +59,24 @@ public class BDController {
     }
 
     public User load_user(String username) throws Misc.UserNotFound {
-        User user;
         RealmResults<User> result = realm.where(User.class).equalTo("username",username) //buscamos user con mismo nombre y pass
                 .findAll();
-        if(result.size() == 1) return realm.copyFromRealm(result.get(0));
+        if(result.size() == 1) return result.get(0);
         else throw new Misc.UserNotFound(); //throw exception...
+    }
+
+    public void guardarUser(final User user){
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(user);
+            }
+        });
+    }
+
+    public void addpuntuacion(User u, Puntuacion p){
+        realm.beginTransaction();
+        u.addPuntuacion(p);
+        realm.commitTransaction();
     }
 }
