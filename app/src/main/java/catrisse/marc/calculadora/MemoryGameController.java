@@ -86,4 +86,11 @@ public class MemoryGameController {
     }
 
 
+    public Long calcularPuntos(Long contador) {
+        int punts = 100; //puntos por carta correcta
+        Long tot = (long) (punts * idButtons.size());
+        Long resta = (contador / 5000)*50; //cada 5 segundos restamos 50 puntos
+        return tot - resta;
+
+    }
 }

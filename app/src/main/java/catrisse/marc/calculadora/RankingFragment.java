@@ -75,4 +75,7 @@ public class RankingFragment extends Fragment {
         }
     }
 
+    //Adapter 4 recylerView
+
+
 }

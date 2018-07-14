@@ -158,7 +158,7 @@ public class GameFragment extends Fragment {
     }
 
     private void fin_juego() {
-        Long points = timerTask.getContador();
+        Long points = controller.calcularPuntos(timerTask.getContador());
         timerTask.interrupt();
         timerTask = null;
         update_timer(0L);

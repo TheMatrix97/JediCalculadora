@@ -63,4 +63,8 @@ public class User extends RealmObject{
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public RealmList<Puntuacion> getPuntuaciones() {
+        return puntuaciones;
+    }
 }
