@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import catrisse.marc.utils.BDController;
 import catrisse.marc.utils.Misc;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout drawer;
@@ -26,6 +24,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO DEJAR ESTO MAS CHACHI
         setContentView(R.layout.activity_drawer);
         //Generamos la toolbar y hacemos que sea la actionbar de la activity
         bd = BDController.getInstance(getApplicationContext());
@@ -44,6 +43,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             user = bd.load_user(getIntent().getStringExtra("user"));
         } catch (Misc.UserNotFound userNotFound) {
             userNotFound.printStackTrace();
+            //TODO pensar si hay que hacer algun tratamiento finish?
         }
         View header = navigationView.getHeaderView(0);
         TextView draw_name = header.findViewById(R.id.textView_drawer_name);

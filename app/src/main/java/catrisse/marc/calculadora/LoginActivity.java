@@ -17,8 +17,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import catrisse.marc.utils.BDController;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText editUser;

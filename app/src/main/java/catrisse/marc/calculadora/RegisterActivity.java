@@ -10,8 +10,6 @@ import android.widget.Toast;
 
 import catrisse.marc.utils.BDController;
 import catrisse.marc.utils.Misc;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 
 public class RegisterActivity extends AppCompatActivity {
