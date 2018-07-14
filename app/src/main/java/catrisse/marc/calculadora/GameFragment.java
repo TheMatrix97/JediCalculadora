@@ -4,11 +4,14 @@ package catrisse.marc.calculadora;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +39,7 @@ public class GameFragment extends Fragment {
     Timer timerTask;
     TextView time;
     MemoryGameController controller;
+    boolean fin = false;
 
     public GameFragment() {
         // Required empty public constructor
@@ -75,10 +79,12 @@ public class GameFragment extends Fragment {
                 }
                 return true;
             case R.id.game_stop:
-                if(timerTask != null && timerTask.isAlive()) {
-                    timerTask.interrupt();
-                    timerTask = null; //limpiamos timer task
-                    update_timer(0L);
+                if(timerTask != null && timerTask.isAlive() || fin) {
+                    if(timerTask != null){
+                        timerTask.interrupt();
+                        timerTask = null; //limpiamos timer task
+                        update_timer(0L);
+                    }
                     reset_game(true);
                 }
                 return true;
@@ -125,8 +131,10 @@ public class GameFragment extends Fragment {
                             } else {
                                 //hacemos que esta segunda no sea clickeable como la primera
                                 b.setClickable(false);
+                                vibrar(500);
                             }
                         }catch (Misc.GameFinalizado e){
+                            b.setClickable(false);
                             //fin del juego setAll no clickable y popout para preguntar si guardar la partida
                             fin_juego();
                         }
@@ -137,11 +145,28 @@ public class GameFragment extends Fragment {
         }
     }
 
+    private void vibrar(long time) {
+        Vibrator v = (Vibrator) getActivity().getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+        if(v != null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                VibrationEffect ve = VibrationEffect.createOneShot(time, VibrationEffect.DEFAULT_AMPLITUDE);
+                v.vibrate(ve);
+            } else {
+                v.vibrate(time);
+            }
+        }
+    }
+
     private void fin_juego() {
         Long points = timerTask.getContador();
         timerTask.interrupt();
+        timerTask = null;
+        update_timer(0L);
+      //  reset_game(true);
+        fin = true;
         ConfirmFinishGame c = ConfirmFinishGame.newInstance(points);
         c.show(getFragmentManager(), "go");
+
     }
 
     @Override
