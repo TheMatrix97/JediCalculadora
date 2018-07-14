@@ -41,7 +41,7 @@ public class RankingFragment extends Fragment {
     }
 
     private void configurar_pager() {
-        PagerAdapter adapter = new PagerAdapter(getActivity().getSupportFragmentManager());
+        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager());
         ViewPager vp = rootView.findViewById(R.id.pager);
         vp.setAdapter(adapter);
 
