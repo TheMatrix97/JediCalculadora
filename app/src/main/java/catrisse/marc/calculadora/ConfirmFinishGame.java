@@ -28,7 +28,7 @@ public class ConfirmFinishGame extends DialogFragment {
                         DrawerActivity a = (DrawerActivity) getActivity();
                         if (a != null) {
                             User aux = a.getUser();
-                            Puntuacion p = new Puntuacion(aux.getUsername(),points,System.currentTimeMillis());
+                            Puntuacion p = new Puntuacion(aux.getUsername(),Double.valueOf(points),System.currentTimeMillis());
                             BDController.getInstance(getActivity().getApplicationContext()).addpuntuacion(aux,p); //añadimos y guardamos la info en la BD
                             Toast.makeText(getActivity().getApplicationContext(),"Guardado", Toast.LENGTH_SHORT).show();
 

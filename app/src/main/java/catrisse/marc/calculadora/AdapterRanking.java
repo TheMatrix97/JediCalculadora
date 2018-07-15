@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterRanking extends RecyclerView.Adapter<AdapterRanking.MyCustomViewHolder> {
@@ -27,8 +26,8 @@ public class AdapterRanking extends RecyclerView.Adapter<AdapterRanking.MyCustom
             points = itemView.findViewById(R.id.points_item);
         }
         public void setItem(Puntuacion p){
-            username.append(p.getUsername());
-            points.append(Long.valueOf(p.getPunt()).toString());
+            username.setText(String.format("Username: %s", p.getUsername()));
+            points.setText(String.format("Puntos: %s", Double.valueOf(p.getScore()).toString()));
         }
     }
 
@@ -52,5 +51,10 @@ public class AdapterRanking extends RecyclerView.Adapter<AdapterRanking.MyCustom
     @Override
     public int getItemCount() {
         return dataset.size();
+    }
+
+    public void swapDataSet(List<Puntuacion> aux){
+        dataset = aux;
+        notifyDataSetChanged();
     }
 }

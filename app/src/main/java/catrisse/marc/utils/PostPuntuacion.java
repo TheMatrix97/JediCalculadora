@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import catrisse.marc.calculadora.Puntuacion;
 
+
 public class PostPuntuacion {
 
     @SerializedName("APIPuntuacion")

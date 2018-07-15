@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import catrisse.marc.calculadora.AdapterRanking;
 import catrisse.marc.calculadora.Puntuacion;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,7 +18,7 @@ public class ApiClient {
         this.apiService = ApiUtils.getAPIService();
     }
 
-    public void peticionGet(){
+    public void peticionGet(final AdapterRanking adapter){
         Call<GetPuntuacion> call = apiService.getPuntuaciones();
        /* PostPuntuacion pp = new PostPuntuacion();
         pp.username = "alvaro";
@@ -27,12 +28,14 @@ public class ApiClient {
             @Override
             public void onResponse(Call<GetPuntuacion> call, Response<GetPuntuacion> response) {
                 List<Puntuacion> aux = response.body().getPuntuaciones();
+                adapter.swapDataSet(aux);
                 Log.v("API","SUCCESS");
 
             }
 
             @Override
             public void onFailure(Call<GetPuntuacion> call, Throwable t) {
+                Log.v("Api", "fail");
 
             }
         });
