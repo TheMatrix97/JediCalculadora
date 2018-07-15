@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 //Esta clase contiene la configuacion del RecyclerView y su adapter
 
 public abstract class RankingFragmentContainer extends android.support.v4.app.Fragment {
-    private View rootLayout;
-    private RecyclerView recycler;
     public AdapterRanking adapter;
 
     @Override
@@ -19,9 +17,9 @@ public abstract class RankingFragmentContainer extends android.support.v4.app.Fr
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         int idFrag = R.layout.fragment_recycler_ranking;
-        rootLayout = inflater.inflate(idFrag, container, false);
+        View rootLayout = inflater.inflate(idFrag, container, false);
         int idRecycler = R.id.recycler_view;
-        recycler = rootLayout.findViewById(idRecycler);
+        RecyclerView recycler = rootLayout.findViewById(idRecycler);
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recycler.setLayoutManager(linearLayoutManager);
         adapter = new AdapterRanking();
