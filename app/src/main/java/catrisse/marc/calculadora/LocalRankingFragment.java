@@ -20,31 +20,21 @@ import io.realm.RealmList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LocalRankingFragment extends Fragment {
-    private View rootLayout;
-    private RecyclerView recycler;
-    public LocalRankingFragment() {
-        // Required empty public constructor
-    }
+public class LocalRankingFragment extends RankingFragmentContainer {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootLayout = inflater.inflate(R.layout.fragment_local_ranking, container, false);
-        recycler = rootLayout.findViewById(R.id.recycler_view_local);
-        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recycler.setLayoutManager(linearLayoutManager);
-        AdapterRanking adapter = new AdapterRanking();
+        View v = super.onCreateView(inflater,container,savedInstanceState);
         try {
             List<Puntuacion> data = load_data_set();
-            adapter.dataset = data;
+            adapter.swapDataSet(data);
         } catch (Misc.UserNotFound userNotFound) {
             userNotFound.printStackTrace();
         }
-        recycler.setAdapter(adapter);
-        return rootLayout;
+        return v;
     }
 
     private List<Puntuacion> load_data_set() throws Misc.UserNotFound {

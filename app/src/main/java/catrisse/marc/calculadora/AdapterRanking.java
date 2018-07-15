@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterRanking extends RecyclerView.Adapter<AdapterRanking.MyCustomViewHolder> {
 
-    public List<Puntuacion> dataset; //set de datos a mostrar
+    public List<Puntuacion> dataset = new ArrayList<>(); //set de datos a mostrar
 
     public class MyCustomViewHolder extends RecyclerView.ViewHolder{ //vista de cada tarjeta a mostrar
         CardView cardView;
