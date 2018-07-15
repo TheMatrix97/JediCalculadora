@@ -53,4 +53,6 @@
     <string name="reset">Reset</string>
     <string name="titleapp">JediFinalApp</string>
     <string name="ranking">Ranking</string>
+    <string name="local">Local</string>
+    <string name="global">Global</string>
 </resources>
