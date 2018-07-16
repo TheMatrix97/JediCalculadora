@@ -41,6 +41,7 @@ public class ReproductorFragment extends Fragment {
     TextView loaded;
     MediaPlayer mediaPlayer;
     Context c;
+    Uri current_playing;
     final int REQUEST_CODE_CONSTANT_EXTERNAL_STORAGE = 1;
 
 
@@ -64,9 +65,16 @@ public class ReproductorFragment extends Fragment {
         if(resultCode == RESULT_OK){
             if(requestCode == 1){
                 try {
-                    Uri uri = data.getData();
-                    mediaPlayer.setDataSource(getActivity().getApplicationContext(),uri);
-                    String fileName = getFileName(uri);
+                    if(mediaPlayer.isPlaying()){
+                        mediaPlayer.stop();
+                        mediaPlayer.reset();
+                    }
+                    current_playing = data.getData();
+                    mediaPlayer.setDataSource(getActivity().getApplicationContext(),current_playing);
+                    String fileName = getFileName(current_playing);
+                    loaded.setText(String.format("Loaded: %s", fileName));
+                    start.setEnabled(true);
+                    stop.setEnabled(true);
                     //TODO assignar el nombre al text field
                     Log.v("bu","bu");
 
@@ -112,12 +120,34 @@ public class ReproductorFragment extends Fragment {
         stop = rootView.findViewById(R.id.buttonStopMusic);
         load = rootView.findViewById(R.id.buttonLoadMusic);
         loaded = rootView.findViewById(R.id.textViewLoadedMusic);
-        start.setClickable(false);
-        stop.setClickable(false);
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 solicitar_permiso();
+            }
+        });
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.stop();
+                }
+                if(current_playing != null){
+                    try {
+                        mediaPlayer.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mediaPlayer.start();
+                }
+            }
+        });
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.stop();
+                }
             }
         });
     }
