@@ -15,6 +15,9 @@
             android:id="@+id/drawer_ranking"
             android:icon="@android:drawable/ic_menu_send"
             android:title="Ranking" />
+        <item
+            android:id="@+id/drawer_reproductor"
+            android:title="Reproductor" />
     </group>
     <item
         android:id="@+id/drawer_grp_options"

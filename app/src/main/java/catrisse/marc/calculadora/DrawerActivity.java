@@ -46,6 +46,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             user = bd.load_user(getIntent().getStringExtra("user"));
         } catch (Misc.UserNotFound userNotFound) {
             userNotFound.printStackTrace();
+            finish();
+            return;
             //TODO pensar si hay que hacer algun tratamiento finish?
         }
         View header = navigationView.getHeaderView(0);
@@ -95,6 +97,15 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         .replace(R.id.fragment_container,rf)
                         .commit();
                 break;
+
+            case R.id.drawer_reproductor:
+                ReproductorFragment reprof = new ReproductorFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container,reprof)
+                        .commit();
+                break;
+
             case R.id.drawer_logout:
                 logout();
                 break;
