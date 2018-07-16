@@ -65,10 +65,8 @@ public class ReproductorFragment extends Fragment {
         if(resultCode == RESULT_OK){
             if(requestCode == 1){
                 try {
-                    if(mediaPlayer.isPlaying()){
-                        mediaPlayer.stop();
-                        mediaPlayer.reset();
-                    }
+                    mediaPlayer.stop();
+                    mediaPlayer.reset();
                     current_playing = data.getData();
                     mediaPlayer.setDataSource(getActivity().getApplicationContext(),current_playing);
                     String fileName = getFileName(current_playing);
