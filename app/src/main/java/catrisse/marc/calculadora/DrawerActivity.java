@@ -1,5 +1,6 @@
 package catrisse.marc.calculadora;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import catrisse.marc.utils.BDController;
 import catrisse.marc.utils.Misc;
+
+import static catrisse.marc.calculadora.RegisterActivity.PREFS_NAME;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout drawer;
@@ -93,11 +96,19 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         .commit();
                 break;
             case R.id.drawer_logout:
-                finish();
+                logout();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0); //eliminamos la configuracion guardada en sharedpref y finalizamos la activity
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("loginUsername", null);
+        editor.apply();
+        finish();
     }
 
     private void load_firstFrag() {

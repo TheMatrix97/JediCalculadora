@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NotificationCompat;
@@ -17,6 +18,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import catrisse.marc.utils.BDController;
+
+import static catrisse.marc.calculadora.RegisterActivity.PREFS_NAME;
 
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText editUser;
@@ -30,6 +33,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ini();
+        String username = getSharedPrefUserLogeado(); //buscamos si hay algun user ya logeado
+        if(username != null){ //si ya esta logeado hacemos el login directamente
+            login(username);
+        }
+
     }
 
     private void ini() {
@@ -47,13 +55,11 @@ public class LoginActivity extends AppCompatActivity {
                 String password = editPass.getText().toString();
                 User aux = new User(name, password);
                 User userauth = bd.estaRegistrado(aux);
-                if(userauth != null){
-                    cancelarNotificacion();
-                    Intent i = new Intent(getApplicationContext(),DrawerActivity.class);
-                    i.putExtra("user", userauth.getUsername());
-                    startActivity(i);
-                }else{
-                    Toast.makeText(getApplicationContext(),"Login incorrecto", Toast.LENGTH_LONG).show();
+                if (userauth != null) {
+                    guardarSharedPref(userauth.getUsername());
+                    login(userauth.getUsername());
+                } else {
+                    Toast.makeText(getApplicationContext(), "Login incorrecto", Toast.LENGTH_LONG).show();
                     mostrar_notificacion_estado(aux.getUsername());
                 }
             }
@@ -68,6 +74,24 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void guardarSharedPref(String username) {
+        SharedPreferences sp = getSharedPreferences(PREFS_NAME,0);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("loginUsername",username);
+        editor.apply();
+    }
+    public String getSharedPrefUserLogeado() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return  settings.getString("loginUsername", null);
+
+    }
+    public void login(String username){
+        cancelarNotificacion();
+        guardarSharedPref(username);
+        Intent i = new Intent(getApplicationContext(),DrawerActivity.class);
+        i.putExtra("user", username);
+        startActivity(i);
+    }
 
 
     private void mostrar_notificacion_estado(String nom) {
