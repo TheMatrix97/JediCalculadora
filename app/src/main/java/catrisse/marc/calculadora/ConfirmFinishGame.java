@@ -8,7 +8,6 @@ import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 import catrisse.marc.utils.ApiClient;
-import catrisse.marc.utils.ApiUtils;
 import catrisse.marc.utils.BDController;
 import catrisse.marc.utils.PostPuntuacion;
 
