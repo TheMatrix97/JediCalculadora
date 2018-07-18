@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
+import catrisse.marc.utils.ApiClient;
+import catrisse.marc.utils.ApiUtils;
 import catrisse.marc.utils.BDController;
+import catrisse.marc.utils.PostPuntuacion;
 
 public class ConfirmFinishGame extends DialogFragment {
     private Long points;
@@ -31,6 +34,7 @@ public class ConfirmFinishGame extends DialogFragment {
                             Puntuacion p = new Puntuacion(aux.getUsername(),Double.valueOf(points),System.currentTimeMillis());
                             BDController.getInstance(getActivity().getApplicationContext()).addpuntuacion(aux,p); //añadimos y guardamos la info en la BD
                             Toast.makeText(getActivity().getApplicationContext(),"Guardado", Toast.LENGTH_SHORT).show();
+                            postPuntuacionAPI(p);
 
                         }else {
                             Toast.makeText(getActivity().getApplicationContext(), "Error al guardar", Toast.LENGTH_SHORT).show();
@@ -44,5 +48,12 @@ public class ConfirmFinishGame extends DialogFragment {
                 });
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    private void postPuntuacionAPI(Puntuacion p) {
+        ApiClient api = new ApiClient();
+        PostPuntuacion aux = new PostPuntuacion();
+        aux.setAPIPuntuacion(p);
+        api.postPeticion(aux);
     }
 }
