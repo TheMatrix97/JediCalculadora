@@ -123,11 +123,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     }
 
     private void load_firstFrag() {
-        BlankFragment bf = new BlankFragment();
+        CalculadoraFragment bf = new CalculadoraFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container,bf)
                 .commit();
+        navigationView.setCheckedItem(R.id.drawer_calculadora);
     }
 
     public User getUser() {
