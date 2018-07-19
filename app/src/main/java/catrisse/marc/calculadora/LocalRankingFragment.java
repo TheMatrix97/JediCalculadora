@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Collections;
 import java.util.List;
 
 import catrisse.marc.utils.BDController;
@@ -26,6 +27,7 @@ public class LocalRankingFragment extends RankingFragmentContainer {
         View v = super.onCreateView(inflater,container,savedInstanceState);
         try {
             List<Puntuacion> data = load_data_set();
+            Collections.sort(data,new Misc.comparadorPuntuaciones());
             adapter.swapDataSet(data);
         } catch (Misc.UserNotFound userNotFound) {
             userNotFound.printStackTrace();

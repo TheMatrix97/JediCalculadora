@@ -2,6 +2,7 @@ package catrisse.marc.utils;
 
 import android.util.Log;
 
+import java.util.Collections;
 import java.util.List;
 
 import catrisse.marc.calculadora.AdapterRanking;
@@ -28,6 +29,7 @@ public class ApiClient {
             @Override
             public void onResponse(Call<GetPuntuacion> call, Response<GetPuntuacion> response) {
                 List<Puntuacion> aux = response.body().getPuntuaciones();
+                Collections.sort(aux, new Misc.comparadorPuntuaciones());
                 adapter.swapDataSet(aux);
                 Log.v("API","SUCCESS");
 
